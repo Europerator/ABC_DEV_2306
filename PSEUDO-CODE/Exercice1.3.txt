@@ -1,0 +1,16 @@
+Déclaration
+  Réel Rayon
+  Réel Angle
+  Réel Aire
+  Réel Pi <-- 3.14159
+
+Dénut
+  Écrire « Programme de calcul de l'air d'un secteur circulaire. »
+  Écrire « Veuillez entrer le rayon du secteur circulaire : »
+  Lire <-- Rayon
+  Écrire « Veuillez entrer l'angle du secteur circulaire : »
+  Lire <-- Angle
+  Aire <-- Rayon * Rayon * Angle * Pi / 360
+  Écrire « L'aire d'un secteur circulaire de rayon », Rayon, « et d'angle », Angle, « est de : », Aire
+  Écrire « Appuyez sur une touche pour quitter. »
+Fin
