@@ -1,0 +1,16 @@
+Déclaration
+
+  Entier: Nombre1
+  Entier: Nombre2
+  Réel double précision: Résultat
+
+Début
+Écrire « Programme de calcul de la moyenne de deux nombres. »
+Écrire « Veuillez saisir un premier nombre : »
+Lire <-- Nombre1
+Écrire « Veuillez saisir un second nomnre : »
+Lire <-- Nombre2
+Résultat <-- (Nombre1 + Nombre2) / 2
+Écrire « La moyenne de », Nombre1, « et », Nombre2, « est de : », Résultat
+Écrire « Appuyez sur une touche pour quitter. »
+Fin
