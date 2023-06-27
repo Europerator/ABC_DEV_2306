@@ -1,0 +1,20 @@
+Déclaration
+  Réel Somme
+  Réel Intérêt
+  Entier Années
+  Réel Résultat
+
+Début
+  Écrire « Programme de calcul des intérêts. »
+  Écrire « Veuillez entrer la somme placée sur le compte : »
+  Lire <-- Somme
+  Écrire « Veuillez entrer l'intérêt offert par la banque : »
+  Lire <-- Intérêt
+  Écrire « Veuillez entrer le nombre d'années de placement : »
+  Lire <-- Années
+  Résultat <-- Somme * (1 + Années * Intérêts)
+  Écrire « Avec un intérêt simple, le compte aura acquis la valeur de : », Résultat
+  Résultat <-- Somme * (1 + Intérêts)^Années
+  Écrire « Avec un intérêt composé, le compte aura acquis la valeur de : », Résultat
+  Écrire Appuyez sur une touche pour quitter. »
+Fin
