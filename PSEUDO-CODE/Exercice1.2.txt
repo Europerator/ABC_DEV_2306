@@ -1,0 +1,15 @@
+Déclaration
+  Réel Rayon
+  Réel Aire
+  Réel Volume
+  Réel Pi = 3.14159
+
+Début
+  Écrire « Programme de calcul de l'aire et du volume d'une sphère. »
+  Écrire « Veuillez entrer le rayon de la sphère : »
+  Lire <-- Rayon
+  Aire <-- Rayon * Rayon * Pi * 4
+  Volume <-- Rayon * Rayon * Rayon * Pi * 4 / 3
+  Écrire « Une sphère de rayon », Rayon « a une aire de », Aire, « et un volume de », Volume
+  Écrire « Appuyer sur une touche pour quitter. »
+Fin
