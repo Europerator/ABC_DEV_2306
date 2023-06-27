@@ -1,0 +1,18 @@
+Déclaration
+  Entier A
+  Entier B
+  Entier C
+
+Début
+  Écrire « Programme d'inversion de nombres entiers. »
+  Écrire « Veuillez entrer le nombre A : »
+  Lire <-- A
+  Écrire « Veuillez entrer le nombre B : »
+  Lire <-- B
+  Écrire « les nombres sont A = », A, « et B = », B
+  C <-- A
+  A <-- B
+  B <-- C
+  Écrire « À présent, A = », A, « et B = », B
+  Écrire « Appuyez sur une touche pour quitter. »
+
