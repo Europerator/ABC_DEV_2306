@@ -18,6 +18,7 @@ public class PremierPremier {
 	secondNumber = reader.nextInt();
 	result = (firstNumber + secondNumber) / 2;
 	System.out.println("La moyenne de " + Integer.toString(firstNumber) + " et " + Integer.toString(secondNumber) + " est de : " + Double.toString(result));
+	reader.close();
 	}
 
 }

@@ -18,6 +18,7 @@ public class ExerciceSecond {
 		area = Math.pow(radius,  2) * pi * 4;
 		volume = area * radius / 3;
 		System.out.println("Une sphère de rayon " + Double.toString(radius) + " a une aire de " + Double.toString(area) + " et un volume de " + Double.toString(volume) + ".");
+		reader.close();
 	}
 
 }
