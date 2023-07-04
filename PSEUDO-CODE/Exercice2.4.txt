@@ -1,0 +1,14 @@
+Déclaration
+  Entier Année
+
+Début
+  Écrire « Programme de l'année bissextile. »
+  Écrire « Entrez l'année : »
+  Lire <-- Année
+  Début Si
+    Si (Année modulo 4 = 0 ET Année modulo 100 != 0) OU (Année modulo 400 = 0)
+      Écrire « Bissextile »
+    Sinon
+      Écrire « Non bissextile »
+  Fin Si
+Fin
