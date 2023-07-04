@@ -1,0 +1,21 @@
+Déclaration
+  Entier a
+  Entier b
+
+Début
+  Écrire « Programme de tri croissant de deux nombres. »
+  Écrire « Entrez la valeur de a : »
+  Lire <-- a
+  Écrire « Entrez la valeur de b : »
+  Lire <-- b
+  Début Si
+    Si a < b
+      Écrire « A = », a, «, B = », b
+    Sinon si b < a
+      Écrire « B = », b, «, A = », a
+    Sinon
+      Écrire « Les deux nombres sont égaux. »
+  Fin Si
+  Écrire « Appuyez sur une touche pour quitter. »
+Fin
+
