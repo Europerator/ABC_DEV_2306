@@ -1,0 +1,41 @@
+Déclaration
+  Double a
+  Double b
+  Double c
+
+Début
+  Écrire « Programme de tri croissant de trois nombres. »
+  Écrire « Entrez la valeur du nombre A : »
+  Lire <-- a
+  Écrire « Entrez la valeur du nombre B : »
+  Lire <-- b
+  Écrire « Entrez la valeur du nombre C : »
+  Lire <-- c
+  Début Si
+    Si a >= b ET a >= c
+      Écrire « A = », a
+      Début Si
+        Si b > c
+	  Écrire «, B = », b, «, C = », c
+        Sinon
+          Écrire «, C = », c, «, B = », b
+      Fin Si
+    Sinon Si b >= a ET b >= c
+      Écrire « B = », b
+      Début Si
+        Si a > c
+	  Écrire «, A = », a, «, C = », c
+        Sinon
+	  Écrire «, C = », c, «, A = », a
+      Fin Si
+    Sinon
+      Écrire « C = », c
+      Début Si
+        Si a > b
+	  Écrire «, A = », a, «, B = », b
+	Sinon
+	  Écrire «, B = », b, «, A = », a
+      Fin Si
+  Fin Si
+Fin
+    
