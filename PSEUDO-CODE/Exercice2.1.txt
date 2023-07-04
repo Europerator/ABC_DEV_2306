@@ -1,0 +1,19 @@
+Déclaration
+  Entier age
+
+Début du programme
+  Écrire « Programme de détermination de majorité. »
+  Écrire « Entrez votre âge en années : »
+  Lire <-- age
+  Début Si
+    Si age > 17
+      Écrire « Vous êtes majeur(e). »
+    Sinon 
+      Début Si
+        Si age < 0
+      Écrire « Vous n'êtes pas encore né(e), donc... »
+      Fin Si
+      Écrire « Vous êtes mineur(e). »
+  Fin Si
+  Écrire « Appuyez sur une touche pour quitter. »
+Fin du programme
