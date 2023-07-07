@@ -8,7 +8,7 @@ public class Courriel {
 		// TODO Auto-generated method stub
 		String firstName;
 		String lastName;
-		StringA department;
+		String department;
 		String FirstnameFirst;
 		String FirstnameLast;
 		Scanner reader = new Scanner(System.in);
