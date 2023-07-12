@@ -1,0 +1,18 @@
+Déclaration
+  Entier nombre
+  Entier itérant
+
+Début Programme
+  Écrire « Programme de recherche de diviseurs »
+  Écrire « Entrez le nombre à analyser : »
+  Lire <-- nombre
+  Début Pour
+    Pour itérant de 2 à (nombre/2 + 1) :
+      Debussy
+        Si nombre modulo itérant
+	  Alors :
+	    Écrire nombre, « est divisible par », itérant
+      Fin Si
+  Fin Pour
+Fin Programme
+
