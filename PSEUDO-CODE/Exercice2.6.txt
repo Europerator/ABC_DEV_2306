@@ -1,0 +1,35 @@
+Déclaration
+  Entier nombre
+  Entier itérant
+  Booléen premier
+
+Début Programme
+  Écrire « Programme de détermination du caractère premier d'un nombre »
+  Écrire « Entrez un nombre entier : »
+  Lire <-- nombre
+  itérant = 1
+  Debussy
+    Si nombre > 1
+      Alors :
+        premier = Vrai
+    Sinon
+      Alors :
+        premier = Faux
+  Fin Si
+  Début Tant que
+    Tant que itérant < (racine carrée de nombre)+1 ET premier :
+      itérant += 1
+      Debussy
+        Si nombre modulo itérant != 0
+	  Alors :
+	    premier = Faux
+	    Écrire nombre, « est divisible par » itérant
+      Fin Si
+  Fin Tant que
+  Debussy
+    Si premier :
+      Écrire nombre, « est un nombre premier. »
+    Sinon :
+      Écrire nombre, « n'est pas premier. »
+  Fin Si
+Fin Programme
