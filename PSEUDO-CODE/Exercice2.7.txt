@@ -1,0 +1,22 @@
+Déclaration
+  Double distance
+  Chaîne de caractères entrée
+
+Début Programme
+  Écrire « Programme de conversion de kilomètres vers miles. »
+  Écrire « Entrez une valeur en kilomètres (entrez Q pour quitter) : »
+  Lire <-- entrée
+  Début Tant que
+    Tant que entrée est différent de "Q" :
+      Debussy
+        Si entrée est une valeur numérique comprise entre 0.01 et 1 000 000
+	  Alors :
+            distance <-- valeur numérique de entrée
+	    Écrire distance, « kilomètres » font distance / 1.609, « miles. »
+	Sinon
+	  Alors :
+	    Écrire « erreur, veuillez entrer une valeur valide entre 0.01km et 1 000 000km. »
+      Fin Si
+      Lire <-- entrée
+  Fin Tant que
+Fin Programme
