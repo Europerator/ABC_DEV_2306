@@ -17,10 +17,10 @@ Début Programme
         premier = Faux
   Fin Si
   Début Tant que
-    Tant que itérant < (racine carrée de nombre)+1 ET premier :
+    Tant que itérant < (racine carrée de nombre)+1 ET premier ET nombre > 2:
       itérant += 1
       Debussy
-        Si nombre modulo itérant != 0
+        Si nombre modulo itérant == 0
 	  Alors :
 	    premier = Faux
 	    Écrire nombre, « est divisible par » itérant
