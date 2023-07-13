@@ -7,9 +7,9 @@ Début Programme
   Écrire « Entrez le nombre à analyser : »
   Lire <-- nombre
   Début Pour
-    Pour itérant de 2 à (nombre/2 + 1) :
+    Pour itrant de 2 à (nombre/2 + 1) :
       Debussy
-        Si nombre modulo itérant
+        Si nombre modulo itérant est égal à zéro
 	  Alors :
 	    Écrire nombre, « est divisible par », itérant
       Fin Si
