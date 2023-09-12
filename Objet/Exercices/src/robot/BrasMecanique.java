@@ -271,7 +271,7 @@ public class BrasMecanique {
 		this.xTranslation(0);
 		this.yTranslation(0);
 	}
-	/** Destructeur du bras mécanique. Effectue une réinitialisation.
+	/** Finaliseur du bras mécanique. Effectue une réinitialisation avant destruction.
 	 * 
 	 */
 	public void finalize() {
