@@ -34,7 +34,8 @@ public class App {
 					|| Character.getNumericValue(results.getString(i).charAt(4)) < 1) //le second dé est bien supérieur à 0
 				{	valide = false;	}
 			score = Character.getNumericValue(results.getString(i).charAt(2)) + Character.getNumericValue(results.getString(i).charAt(4));
-			if (score > 10) { joueurs[i%3] += 3; }
+			if (results.getString(i).charAt(2) == results.getString(i).charAt(4)) { joueurs[i%3] += -2; }
+			else if (score > 10) { joueurs[i%3] += 3; }
 			else if (score > 6) { joueurs[i%3] += 1; }
 			else { joueurs[i%3] += 0; }
 		}
