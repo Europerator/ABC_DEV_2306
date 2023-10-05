@@ -51,7 +51,7 @@ public class Aquarium {
 	 */
 	Algue get_random_algue() {
 		ArrayList<Algue> algues = this.get_algues();
-		int random_index = (int)(Math.random()*algues.size());
+		int random_index = (int)Math.floor(Math.random()*algues.size());
 		return algues.get(random_index);
 	}
 	/**
@@ -71,7 +71,7 @@ public class Aquarium {
 	Poisson get_random_poisson(Poisson except) {
 		ArrayList<Poisson> poissons = this.get_poissons();
 		poissons.remove(except);
-		int random_index = (int)(Math.random()*poissons.size());
+		int random_index = (int)Math.floor(Math.random()*poissons.size());
 		return poissons.get(random_index);
 	}
 	
@@ -80,7 +80,7 @@ public class Aquarium {
 	 * @return (String) Un nom aléatoire unique.
 	 */
 	private String nouveau_nom() {
-		int choix = (int)(Math.random()*NOMS.length);
+		int choix = (int)Math.floor(Math.random()*NOMS.length);
 		this.usageNoms[choix]++;
 		if (this.usageNoms[choix] == 1) { return NOMS[choix]; }
 		return NOMS[choix] + this.usageNoms[choix];
@@ -95,12 +95,12 @@ public class Aquarium {
 		//todo: banque de nom évolutive (et prenant en compte les petits malins
 		//qui ajouteraient Aldy2 sans qu'il soit pris en compte
 		boolean existe = false;
-		int i;
-		for (i = 0; !existe && i < NOMS.length; i++) { if (NOMS[i] == _nom) { existe = true; } }
+		int trouve = 0;
+		for (int i = 0; i < NOMS.length && !existe; i++) { if (_nom.equalsIgnoreCase(NOMS[i])) { existe = true; trouve = i;} }
 		if (!existe) { return _nom; }
-		this.usageNoms[i]++;
-		if (this.usageNoms[i] == 1) { return _nom; }
-		return _nom + this.usageNoms[i];
+		this.usageNoms[trouve]++;
+		if (this.usageNoms[trouve] == 1) { return _nom; }
+		return _nom + this.usageNoms[trouve];
 	}
 	
 	/**
@@ -111,7 +111,7 @@ public class Aquarium {
 	 */
 	void ajouter_algues(int quantite, int age, int pv) {
 		int random_index;
-		for (int i = 0; i < quantite; i++) { random_index = (int)(Math.random()*(this.habitants.size()+1)); this.habitants.add(random_index, new Algue(age, pv)); }
+		for (int i = 0; i < quantite; i++) { random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1)); this.habitants.add(random_index, new Algue(age, pv)); }
 	}
 	/**
 	 * Procédure d'ajout d'un poisson à l'aquarium avec sexe précisé.
@@ -130,7 +130,7 @@ public class Aquarium {
 		case 4: arrivant = new Sole(this.nouveau_nom(nom), age, sexe); break;
 		default: arrivant = new Thon(this.nouveau_nom(nom), age, sexe);
 		}
-		int random_index = (int)(Math.random()*(this.habitants.size()+1));
+		int random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1));
 		this.habitants.add(random_index, arrivant);
 	}
 	/**
@@ -149,7 +149,7 @@ public class Aquarium {
 		case 4: arrivant = new Sole(this.nouveau_nom(nom), age); break;
 		default: arrivant = new Thon(this.nouveau_nom(nom), age);
 		}
-		int random_index = (int)(Math.random()*(this.habitants.size()+1));
+		int random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1));
 		this.habitants.add(random_index, arrivant);
 	}
 	/**
@@ -172,7 +172,7 @@ public class Aquarium {
 		arrivant = espece.getDeclaredConstructor(clarg).newInstance(arg);
 		//Félicitations, nous avons créé un objet d'une classe sans savoir laquelle.
 		
-		int random_index = (int)(Math.random()*(this.habitants.size()+1));
+		int random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1));
 		this.habitants.add(random_index, arrivant);
 	}
 	/**
@@ -186,15 +186,15 @@ public class Aquarium {
 		Class[] clarg = new Class[] {String.class, int.class, boolean.class};
 		Object[] arg = new Object[] {this.nouveau_nom(nom), age};
 		arrivant = espece.getDeclaredConstructor(clarg).newInstance(arg);
-		int random_index = (int)(Math.random()*(this.habitants.size()+1));
+		int random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1));
 		this.habitants.add(random_index, arrivant);
 	}
 	/**
 	 * Procédure d'ajout d'un nouveau poisson aléatoire à l'aquarium.
 	 */
 	void ajouter_poisson() {
-		int espece = (int)(Math.random()*6);
-		int age = (int)(Math.random()*20);
+		int espece = (int)Math.floor(Math.random()*6);
+		int age = (int)Math.floor(Math.random()*20);
 		this.ajouter_poisson(espece, this.nouveau_nom(), age);
 	}
 	/**
@@ -211,12 +211,12 @@ public class Aquarium {
 	void peupler(int algues, int bars, int carpes, int merous, int poissonClowns, int soles, int thons) {
 		this.ajouter_algues(algues, 0, 10);
 		int age;
-		for (int b = 0; b < bars; b++) { age = (int)(Math.random()*20); this.ajouter_poisson(0, this.nouveau_nom(), age); }
-		for (int c = 0; c < carpes; c++) { age = (int)(Math.random()*20); this.ajouter_poisson(1, this.nouveau_nom(), age); }
-		for (int m = 0; m < merous; m++) { age = (int)(Math.random()*20); this.ajouter_poisson(2, this.nouveau_nom(), age); }
-		for (int pc = 0; pc < poissonClowns; pc++) { age = (int)(Math.random()*20); this.ajouter_poisson(3, this.nouveau_nom(), age); }
-		for (int s = 0; s < soles; s++) { age = (int)(Math.random()*20); this.ajouter_poisson(4, this.nouveau_nom(), age); }
-		for (int t = 0; t < thons; t++) { age = (int)(Math.random()*20); this.ajouter_poisson(5, this.nouveau_nom(), age); }
+		for (int b = 0; b < bars; b++) { age = (int)Math.floor(Math.random()*20); this.ajouter_poisson(0, this.nouveau_nom(), age); }
+		for (int c = 0; c < carpes; c++) { age = (int)Math.floor(Math.random()*20); this.ajouter_poisson(1, this.nouveau_nom(), age); }
+		for (int m = 0; m < merous; m++) { age = (int)Math.floor(Math.random()*20); this.ajouter_poisson(2, this.nouveau_nom(), age); }
+		for (int pc = 0; pc < poissonClowns; pc++) { age = (int)Math.floor(Math.random()*20); this.ajouter_poisson(3, this.nouveau_nom(), age); }
+		for (int s = 0; s < soles; s++) { age = (int)Math.floor(Math.random()*20); this.ajouter_poisson(4, this.nouveau_nom(), age); }
+		for (int t = 0; t < thons; t++) { age = (int)Math.floor(Math.random()*20); this.ajouter_poisson(5, this.nouveau_nom(), age); }
 	}
 	/**
 	 * Procédure d'ajout de masse d'organismes dans l'aquarium.
@@ -229,5 +229,6 @@ public class Aquarium {
 		this.ajouter_algues(algues, 0, 10);
 		for (int i = 0; i < poissons; i++) { this.ajouter_poisson(); }
 	}
-
+	
+	
 }
