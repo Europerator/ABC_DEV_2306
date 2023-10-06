@@ -81,7 +81,7 @@ public class Aquarium {
 	 */
 	private String nouveau_nom() {
 		int choix = (int)Math.floor(Math.random()*NOMS.length);
-		this.usageNoms[choix]++;
+		//this.usageNoms[choix]++;
 		if (this.usageNoms[choix] == 1) { return NOMS[choix]; }
 		return NOMS[choix] + this.usageNoms[choix];
 	}
@@ -94,10 +94,9 @@ public class Aquarium {
 	private String nouveau_nom(String _nom) {
 		//todo: banque de nom évolutive (et prenant en compte les petits malins
 		//qui ajouteraient Aldy2 sans qu'il soit pris en compte
-		boolean existe = false;
-		int trouve = 0;
-		for (int i = 0; i < NOMS.length && !existe; i++) { if (_nom.equalsIgnoreCase(NOMS[i])) { existe = true; trouve = i;} }
-		if (!existe) { return _nom; }
+		int trouve = -1;
+		for (int i = 0; i < NOMS.length && trouve > 0; i++) { if (_nom.equalsIgnoreCase(NOMS[i])) { trouve = i;} }
+		if (trouve < 0) { return _nom; }
 		this.usageNoms[trouve]++;
 		if (this.usageNoms[trouve] == 1) { return _nom; }
 		return _nom + this.usageNoms[trouve];
