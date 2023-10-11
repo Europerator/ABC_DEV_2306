@@ -1,5 +1,7 @@
 package javaquarium;
 
+import java.util.Random;
+
 /**
  * Classe parente de tous les poissons.
  */
@@ -22,6 +24,10 @@ public class Poisson extends EtreVivant {
 	 * 4+: indéterminé.
 	 */
 	protected int sexuation;
+	/**
+	 * Générateur d'aléatoire.
+	 */
+	protected static Random radom_gen = new Random();
 	
 	/**
 	 * Constructeur de poisson sans sexe précisé.
@@ -30,12 +36,7 @@ public class Poisson extends EtreVivant {
 	 * @param _sexuation (int) type de sexuation de l'individu : 1=monosexué, 2=hermaphrodite avec l'âge, 3=hermaphrodite opportuniste, 0 et 4+=indéterminé.
 	 */
 	Poisson(String _nom, int _age, int _sexuation) {
-		super(_age);
-		this.nom = _nom;
-		this.sexuation = _sexuation;
-		if (sexuation == 2) { this.sexe = false; }
-		else if (Math.random()*2 > 1) { this.sexe = true; }
-		else { this.sexe = false; }
+		this(_nom, _age, _sexuation, radom_gen.nextBoolean());
 	}
 	/**
 	 * Constructeur de poisson avec sexe précisé.

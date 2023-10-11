@@ -21,14 +21,24 @@ public class Aquarium {
 	 * Suit l'usage des noms de la banque parmi les habitants de l'aquarium.
 	 */
 	private int[] usageNoms;
+	/**
+	 * Store le numéro du tour d'exécution courant.
+	 */
+	private int tourCourant;
+	private Moniteur hublot;
 	
 	/**
 	 * Constructeur générique d'Aquarium. Commence vide.
 	 */
-	Aquarium() {
+	Aquarium(Moniteur _hublot) {
 		this.habitants = new ArrayList<EtreVivant>();
+		this.tourCourant = 0;
+		this.hublot = _hublot;
 		usageNoms = new int[NOMS.length];
 		for (int i = 0; i < usageNoms.length; i++) { usageNoms[i] = 0; }
+	}
+	Aquarium() {
+		this(new Moniteur());
 	}
 	public String toString() {
 		String retour = "Aquarium (p=" + this.habitants.size() + ")\n";
@@ -49,10 +59,12 @@ public class Aquarium {
 	 * Accesseur d'une algue aléatoire parmi la population de l'aquarium.
 	 * @return (Algue) une algue prise au hasard.
 	 */
-	Algue get_random_algue() {
+	Algue get_random_algue() { //todo: what if get_algues() returns empty?
 		ArrayList<Algue> algues = this.get_algues();
 		int random_index = (int)Math.floor(Math.random()*algues.size());
-		return algues.get(random_index);
+		Algue elue = algues.get(random_index);
+		hublot.notifier(Evenement.RANDOM, this.tourCourant, "Une algue a été prise au hasard", "index " + random_index + "parmi " + algues.size() + ": " + elue.toString(), false);
+		return elue;
 	}
 	/**
 	 * Accesseur retournant l'ensemble des poissons contenus dans l'aquarium.
@@ -72,7 +84,16 @@ public class Aquarium {
 		ArrayList<Poisson> poissons = this.get_poissons();
 		poissons.remove(except);
 		int random_index = (int)Math.floor(Math.random()*poissons.size());
-		return poissons.get(random_index);
+		Poisson elu = poissons.get(random_index);
+		hublot.notifier(Evenement.RANDOM, this.tourCourant, "Un poisson a été pris au hasard", "index " + random_index + "parmi " + poissons.size() + ": " +  elu.toString(), false);
+		return elu;
+	}
+	/**
+	 * Accesseur du tour d'exécution en cours.
+	 * @return (int) numéro du tour.
+	 */
+	int get_tourCourant() {
+		return this.tourCourant;
 	}
 	
 	/**
