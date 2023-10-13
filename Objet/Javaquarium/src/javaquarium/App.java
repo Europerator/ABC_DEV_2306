@@ -1,6 +1,6 @@
 package javaquarium;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class App {
 
@@ -9,5 +9,4 @@ public class App {
 		plouf.peupler(0, 1000);
 		System.out.println(plouf.toString());
 	}
-
 }

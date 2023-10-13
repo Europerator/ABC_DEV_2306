@@ -11,6 +11,10 @@ public class Aquarium {
 	 */
 	private ArrayList<EtreVivant> habitants;
 	/**
+	 * Regroupe les individus décédés.
+	 */
+	private ArrayList<EtreVivant> cimetiere;
+	/**
 	 * Banque de noms par défaut pour les nouveaux poissons.
 	 */
 	private final static String[] NOMS = new String[] {"Aldy", "Byron", "Coda", "Deli",
@@ -32,6 +36,7 @@ public class Aquarium {
 	 */
 	Aquarium(Moniteur _hublot) {
 		this.habitants = new ArrayList<EtreVivant>();
+		this.cimetiere = new ArrayList<EtreVivant>();
 		this.tourCourant = 0;
 		this.hublot = _hublot;
 		usageNoms = new int[NOMS.length];
@@ -122,6 +127,13 @@ public class Aquarium {
 		if (this.usageNoms[trouve] == 1) { return _nom; }
 		return _nom + this.usageNoms[trouve];
 	}
+	private void nouvel_habitant(EtreVivant habitant, int index) {	
+		String message;
+		this.habitants.add(index, habitant);
+		if (habitant instanceof Poisson) { message = "Création d'un poisson."; }
+		else { message = "Création d'une algue."; }
+		this.hublot.notifier(Evenement.CREATION, this.tourCourant, message, habitant.toString(), false);
+	}
 	
 	/**
 	 * Procédure d'introduction d'algues à l'aquarium.
@@ -131,7 +143,7 @@ public class Aquarium {
 	 */
 	void ajouter_algues(int quantite, int age, int pv) {
 		int random_index;
-		for (int i = 0; i < quantite; i++) { random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1)); this.habitants.add(random_index, new Algue(age, pv)); }
+		for (int i = 0; i < quantite; i++) { random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1)); this.nouvel_habitant(new Algue(age, pv), random_index); }
 	}
 	/**
 	 * Procédure d'ajout d'un poisson à l'aquarium avec sexe précisé.
@@ -143,15 +155,15 @@ public class Aquarium {
 	void ajouter_poisson(int espece, String nom, int age, boolean sexe) {
 		Poisson arrivant;
 		switch (espece) {
-		case 0: arrivant = new Bar(this.nouveau_nom(nom), age, sexe); break;
-		case 1: arrivant = new Carpe(this.nouveau_nom(nom), age, sexe); break;
-		case 2: arrivant = new Merou(this.nouveau_nom(nom), age, sexe); break;
-		case 3: arrivant = new PoissonClown(this.nouveau_nom(nom), age, sexe); break;
-		case 4: arrivant = new Sole(this.nouveau_nom(nom), age, sexe); break;
-		default: arrivant = new Thon(this.nouveau_nom(nom), age, sexe);
+		case 0: arrivant = new Bar(nom, age, sexe); break;
+		case 1: arrivant = new Carpe(nom, age, sexe); break;
+		case 2: arrivant = new Merou(nom, age, sexe); break;
+		case 3: arrivant = new PoissonClown(nom, age, sexe); break;
+		case 4: arrivant = new Sole(nom, age, sexe); break;
+		default: arrivant = new Thon(nom, age, sexe);
 		}
 		int random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1));
-		this.habitants.add(random_index, arrivant);
+		this.nouvel_habitant(arrivant, random_index);
 	}
 	/**
 	 * Procédure d'ajout d'un poisson à l'aquarium sans sexe précisé.
@@ -162,15 +174,15 @@ public class Aquarium {
 	void ajouter_poisson(int espece, String nom, int age) {
 		Poisson arrivant;
 		switch (espece) {
-		case 0: arrivant = new Bar(this.nouveau_nom(nom), age); break;
-		case 1: arrivant = new Carpe(this.nouveau_nom(nom), age); break;
-		case 2: arrivant = new Merou(this.nouveau_nom(nom), age); break;
-		case 3: arrivant = new PoissonClown(this.nouveau_nom(nom), age); break;
-		case 4: arrivant = new Sole(this.nouveau_nom(nom), age); break;
-		default: arrivant = new Thon(this.nouveau_nom(nom), age);
+		case 0: arrivant = new Bar(nom, age); break;
+		case 1: arrivant = new Carpe(nom, age); break;
+		case 2: arrivant = new Merou(nom, age); break;
+		case 3: arrivant = new PoissonClown(nom, age); break;
+		case 4: arrivant = new Sole(nom, age); break;
+		default: arrivant = new Thon(nom, age);
 		}
 		int random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1));
-		this.habitants.add(random_index, arrivant);
+		this.nouvel_habitant(arrivant, random_index);
 	}
 	/**
 	 * Procédure d'ajout d'un poisson à l'aquarium avec sexe précisé.
@@ -193,7 +205,7 @@ public class Aquarium {
 		//Félicitations, nous avons créé un objet d'une classe sans savoir laquelle.
 		
 		int random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1));
-		this.habitants.add(random_index, arrivant);
+		this.nouvel_habitant(arrivant, random_index);
 	}
 	/**
 	 * Procédure d'ajout d'un poisson à l'aquarium avec sexe précisé.
@@ -207,7 +219,7 @@ public class Aquarium {
 		Object[] arg = new Object[] {this.nouveau_nom(nom), age};
 		arrivant = espece.getDeclaredConstructor(clarg).newInstance(arg);
 		int random_index = (int)Math.floor(Math.random()*(this.habitants.size()+1));
-		this.habitants.add(random_index, arrivant);
+		this.nouvel_habitant(arrivant, random_index);
 	}
 	/**
 	 * Procédure d'ajout d'un nouveau poisson aléatoire à l'aquarium.
@@ -229,6 +241,10 @@ public class Aquarium {
 	 * @param thons (int) nombre de thons à ajouter.
 	 */
 	void peupler(int algues, int bars, int carpes, int merous, int poissonClowns, int soles, int thons) {
+		this.hublot.notifier(Evenement.PEUPLEMENT, this.tourCourant, "Ordre de peuplement", "Algues : " + algues
+				+ ",\n bars : " + bars + ",\n carpes : " + carpes
+				+ ",\n mérous : " + merous + ",\n poisson-clowns : " + poissonClowns
+				+ ",\n soles : " + soles + ",\n thons : " + thons + ".", false);
 		this.ajouter_algues(algues, 0, 10);
 		int age;
 		for (int b = 0; b < bars; b++) { age = (int)Math.floor(Math.random()*20); this.ajouter_poisson(0, this.nouveau_nom(), age); }
@@ -246,9 +262,51 @@ public class Aquarium {
 	 * @param poissons nombre de poissons à ajouter.
 	 */
 	void peupler(int algues, int poissons) {
+		this.hublot.notifier(Evenement.PEUPLEMENT, this.tourCourant, "Ordre de peuplement", "Algues : " + algues + ", poissons : " + poissons + ".", false);
 		this.ajouter_algues(algues, 0, 10);
 		for (int i = 0; i < poissons; i++) { this.ajouter_poisson(); }
 	}
-	
-	
+	/**
+	 * Procédure exécutant le nombre de tours renseigné.
+	 * @param tours (int) nombre de tours d'exécution à effectuer.
+	 */
+	void executer(int tours) {
+		for (int t = 0; t < tours; t++) { //1) poissons : mange, sinon reproduire. 2) algues. 3) vieillir
+			this.tourCourant++;
+			ArrayList<Poisson> poissons = this.get_poissons(); 
+			for (int p = 0; p < poissons.size(); p++) {
+				Poisson poisson = poissons.get(p);
+				if (poisson.aFaim()) {
+					//c'est le moment de manger
+					int pv_prerepas = poisson.getPointsDeVie();
+					boolean reussite = false;
+					String message;
+					String details = "acteur : " + poisson.toString() + "\ncible : ";
+					if (poisson instanceof Vegetarien) {
+						Algue aproie = this.get_random_algue();
+						message = poisson.getNom() + "tente de manger une algue.";
+						details = details + aproie.toString();
+						((Vegetarien) poisson).manger(aproie);
+					}
+					else {
+						Poisson pproie = this.get_random_poisson(poisson);
+						message = poisson.getNom() + "tente de manger" + pproie.getNom() + ".";
+						details = details + pproie.toString();
+						((Carnivore)poisson).manger(pproie);
+					}
+					if (poisson.getPointsDeVie() > pv_prerepas) { reussite = true; message = message + " Il réussit !"; }
+					hublot.notifier(Evenement.MANGER, this.tourCourant, message, details, reussite);
+				}
+				else {
+					//c'est le moment de séduire
+				}
+			}
+			ArrayList<Algue> algues = this.get_algues();
+			for (int a = 0; a < algues.size(); a++) {
+				//la mitose fort morose
+			}
+			for (int e = 0; e < this.habitants.size(); e++) { this.habitants.get(e).vieillir();	}
+			//ici les morts vont au cimetière.
+		}
+	}
 }
