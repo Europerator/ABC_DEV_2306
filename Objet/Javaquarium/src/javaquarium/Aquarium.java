@@ -90,7 +90,7 @@ public class Aquarium {
 		poissons.remove(except);
 		int random_index = (int)Math.floor(Math.random()*poissons.size());
 		Poisson elu = poissons.get(random_index);
-		hublot.notifier(Evenement.RANDOM, this.tourCourant, "Un poisson a été pris au hasard", "index " + random_index + "parmi " + poissons.size() + ": " +  elu.toString(), false);
+		hublot.notifier(Evenement.RANDOM, this.tourCourant, "Un poisson a été pris au hasard", "(index " + random_index + " parmi " + poissons.size() + ") : " +  elu.toString(), false);
 		return elu;
 	}
 	/**
@@ -213,7 +213,7 @@ public class Aquarium {
 	 * @param nom (String) nom de l'individu.
 	 * @param age (int) âge en tours d'exécution au moment de l'introduction. 
 	 */
-	void ajouter_poisson(Class<Poisson> espece, String nom, int age) throws Exception {
+	void ajouter_poisson(Class<? extends Poisson> espece, String nom, int age) throws Exception {
 		Poisson arrivant;
 		Class[] clarg = new Class[] {String.class, int.class, boolean.class};
 		Object[] arg = new Object[] {this.nouveau_nom(nom), age};
@@ -270,7 +270,7 @@ public class Aquarium {
 	 * Procédure exécutant le nombre de tours renseigné.
 	 * @param tours (int) nombre de tours d'exécution à effectuer.
 	 */
-	void executer(int tours) {
+	void executer(int tours) throws Exception {
 		for (int t = 0; t < tours; t++) { //1) poissons : mange, sinon reproduire. 2) algues. 3) vieillir
 			this.tourCourant++;
 			ArrayList<Poisson> poissons = this.get_poissons(); 
@@ -284,7 +284,7 @@ public class Aquarium {
 					String details = "acteur : " + poisson.toString() + "\ncible : ";
 					if (poisson instanceof Vegetarien) {
 						Algue aproie = this.get_random_algue();
-						message = poisson.getNom() + "tente de manger une algue.";
+						message = poisson.getNom() + " tente de manger une algue.";
 						details = details + aproie.toString();
 						((Vegetarien) poisson).manger(aproie);
 					}
@@ -294,19 +294,57 @@ public class Aquarium {
 						details = details + pproie.toString();
 						((Carnivore)poisson).manger(pproie);
 					}
-					if (poisson.getPointsDeVie() > pv_prerepas) { reussite = true; message = message + " Il réussit !"; }
+					if (poisson.getPointsDeVie() > pv_prerepas) { reussite = true; message = message + " Iel réussit !"; }
+					else { message = message + " Iel échoue."; }
 					hublot.notifier(Evenement.MANGER, this.tourCourant, message, details, reussite);
 				}
 				else {
 					//c'est le moment de séduire
+					Poisson ppartenaire = this.get_random_poisson(poisson);
+					String message = poisson.getNom() + " tente de se reproduire avec " + ppartenaire.getNom();  
+					String details = "acteur : " + poisson.toString() + "\ncible : " + ppartenaire.toString();
+					boolean reussite = poisson.saccoupler(ppartenaire);
+					if (reussite) {
+						message = message + " Iel réussit !";
+						this.ajouter_poisson(poisson.getClass(), this.nouveau_nom(), 0);
+					}
+					else {
+						message = message + " Iel échoue. ";
+					}
+					this.hublot.notifier(Evenement.REPRODUIRE, this.tourCourant, message, details, reussite);
 				}
 			}
 			ArrayList<Algue> algues = this.get_algues();
 			for (int a = 0; a < algues.size(); a++) {
 				//la mitose fort morose
+				if (algues.get(a).sereproduire()) {
+					String message = "Une algue se reproduit.";
+					String details = algues.get(a).toString();
+					this.ajouter_algues(1, 0, algues.get(a).getPointsDeVie());
+					this.hublot.notifier(Evenement.REPRODUIRE, this.tourCourant, message, details, true);
+				}
 			}
 			for (int e = 0; e < this.habitants.size(); e++) { this.habitants.get(e).vieillir();	}
 			//ici les morts vont au cimetière.
+			for (int l = 0; l < this.habitants.size(); l++) {
+				if (!this.habitants.get(l).estVivant()) {
+					String message;
+					String details = this.habitants.get(l).toString();
+					if (this.habitants.get(l) instanceof Poisson) { message = ((Poisson) this.habitants.get(l)).getNom() + " est mort. "; }
+					else { message = "Une algue est morte. "; }
+					if (this.habitants.get(l).getPointsDeVie() <= 0) {
+						message = message + "Cause probable : prédation.";
+					}
+					else if (this.habitants.get(l).getAge() >= 20) {
+						message = message + "Cause probable : senescence.";
+					}
+					else { message = message + "Cause inconnue."; }
+					this.hublot.notifier(Evenement.MORT, this.tourCourant, message, details, false);
+					this.cimetiere.add(this.habitants.get(l));
+					this.habitants.remove(l);
+				}
+			}
+			this.hublot.notifier(Evenement.STATUT, this.tourCourant, "L'aquarium est peuplé de " + this.habitants.size() + " individus.", this.toString(), false);
 		}
 	}
 }
