@@ -320,8 +320,8 @@ public class Aquarium {
 				if (algues.get(a).sereproduire()) {
 					String message = "Une algue se reproduit.";
 					String details = algues.get(a).toString();
-					this.ajouter_algues(1, 0, algues.get(a).getPointsDeVie());
 					this.hublot.notifier(Evenement.REPRODUIRE, this.tourCourant, message, details, true);
+					this.ajouter_algues(1, 0, algues.get(a).getPointsDeVie());
 				}
 			}
 			for (int e = 0; e < this.habitants.size(); e++) { this.habitants.get(e).vieillir();	}
